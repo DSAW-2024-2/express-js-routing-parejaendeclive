@@ -3,8 +3,6 @@ const router = express.Router();
 
 // Simulación de datos en memoria con la estructura solicitada
 let products = [
-    { id: "1", name: "Laptop", price: "1200", category: "Electronics" },
-    { id: "2", name: "Phone", price: "800", category: "Electronics" }
 ];
 
 // Ruta GET para obtener todos los productos
