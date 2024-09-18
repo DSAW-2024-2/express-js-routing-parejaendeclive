@@ -9,7 +9,6 @@ app.use(express.json());
 // Ruta principal
 app.get("/", (req, res) => {
     res.send("Api funcionando correctamente");
-
 });
 
 // Rutas de productos
