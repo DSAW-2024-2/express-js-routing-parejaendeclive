@@ -1,20 +1,22 @@
 import express from 'express';
 import productsRouter from './shop_routes/products.js';
-
+import route_users from './shop_routes/users.js';
+const port = process.env.PORT || 3000;
 const app = express();
 
-// Middleware para parsear JSON
+// Middleware for parsing JSON
 app.use(express.json());
 
-// Ruta principal
+// principal route
 app.get("/", (req, res) => {
-    res.send("Api funcionando correctamente");
+    res.send("server in");
 });
-
-// Rutas de productos
+// users routes
+app.use('/users', route_users);
+// products routes
 app.use('/products', productsRouter);
 
-// Iniciar el servidor
-app.listen(3000, () => {
-    console.log('Server listening on port 3000');
+// listen server
+app.listen(port, () => {
+    console.log('Server listening on', port);
 });
