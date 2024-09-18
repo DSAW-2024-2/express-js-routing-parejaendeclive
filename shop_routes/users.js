@@ -34,6 +34,20 @@ route_users.put('/:id' , (req, res) =>{
     res.send(users);
     
 })
+//DELETE user
+route_users.delete('/:id' , (req, res) =>{
+    
+    const id = req.params.id;
+    const index = users.findIndex( i => i.id == id);
+
+    if(index < 0){
+        return res.status(404).send('User not found');
+    }
+    
+    users.splice(index, 1);
+    res.send(users);
+    
+})
 
 
 
