@@ -12,6 +12,15 @@ route_users.get('/' , (req, res) =>{
     res.send(users);
 })
 
+//GET user by id
+route_users.get('/:id' , (req, res) =>{
+    const id=req.params.id;
+    const user = users.find(user => user.id === id); 
+    
+    res.json(user);
+
+})
+
 //POST users
 route_users.post('/' , (req, res) =>{
     const new_user = req.body;
