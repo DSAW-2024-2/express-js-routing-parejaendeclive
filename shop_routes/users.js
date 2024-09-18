@@ -24,6 +24,14 @@ route_users.post('/' , (req, res) =>{
 route_users.put('/:id' , (req, res) =>{
     const update_user = req.body;
     const id = req.params.id;
+    const index = users.findIndex( i => i.id == id);
+
+    if(index < 0){
+        return res.status(404).send('User not found');
+    }
+    
+    users[index] = update_user;
+    res.send(users);
     
 })
 
