@@ -1,12 +1,25 @@
 import express from 'express';
-const router = express.Router();
+const products_router = express.Router();
 
-// Simulación de datos en memoria con la estructura solicitada
+// products default
 let products = [
+    {
+        id: "5",
+        name: "phone",
+        price: "1500000",
+        category: "technology"
+    },
+    {
+        id: "7",
+        name: "rice",
+        price: "10000",
+        category: "food"
+    }
+
 ];
 
-// Ruta GET para obtener todos los productos
-router.get('/', (req, res) => {
+//  GET products
+products_router.get('/', (req, res) => {
     try {
         res.json(products);
     } catch (error) {
@@ -14,62 +27,68 @@ router.get('/', (req, res) => {
     }
 });
 
-// Ruta POST para agregar un nuevo producto
-router.post('/', (req, res) => {
+// POST add product
+products_router.post('/', (req, res) => {
     try {
         const { id, name, price, category } = req.body;
         if (!id || !name || !price || !category) {
-            return res.status(400).json({ message: "Todos los campos son obligatorios" });
+            return res.status(400).json({ message: "products json incomplete" });
+        }
+        if (products.some(p => p.id === id)) {
+            return res.status(400).json({ message: "ID already in use" });
         }
         products.push({ id, name, price, category });
-        res.status(201).json({ message: "Producto agregado exitosamente" });
+        res.status(201).json({ message: "product added" });
     } catch (error) {
-        res.status(500).json({ message: "Error al agregar el producto", error: error.message });
+        res.status(500).json({ message: "product not added", error: error.message });
     }
 });
 
-// Ruta GET para obtener un producto por ID
-router.get('/:id', (req, res) => {
+// GET products by id
+products_router.get('/:id', (req, res) => {
     try {
         const product = products.find(p => p.id === req.params.id);
         if (!product) {
-            return res.status(404).json({ message: "Producto no encontrado" });
+            return res.status(404).json({ message: "product Id does not exist" });
         }
         res.json(product);
     } catch (error) {
-        res.status(500).json({ message: "Error al obtener el producto", error: error.message });
+        res.status(500).json({ message: "product not founded", error: error.message });
     }
 });
 
-// Ruta PUT para actualizar un producto
-router.put('/:id', (req, res) => {
+// PUT update products
+products_router.put('/:id', (req, res) => {
     try {
         const { name, price, category } = req.body;
         const productIndex = products.findIndex(p => p.id === req.params.id);
         
         if (productIndex === -1) {
-            return res.status(404).json({ message: "Producto no encontrado" });
+            return res.status(404).json({ message: "product not founded" });
+        }
+        if (products.some(p => p.id === productId && p.id !== productId)) {
+            return res.status(400).json({ message: "ID already in use" });
         }
 
         products[productIndex] = { ...products[productIndex], name, price, category };
-        res.json({ message: "Producto actualizado correctamente" });
+        res.json({ message: "Product updated" });
     } catch (error) {
-        res.status(500).json({ message: "Error al actualizar el producto", error: error.message });
+        res.status(500).json({ message: "product not updated", error: error.message });
     }
 });
 
-// Ruta DELETE para eliminar un producto
-router.delete('/:id', (req, res) => {
+// DELETE products
+products_router.delete('/:id', (req, res) => {
     try {
         const productIndex = products.findIndex(p => p.id === req.params.id);
         if (productIndex === -1) {
-            return res.status(404).json({ message: "Producto no encontrado" });
+            return res.status(404).json({ message: "Product not founded" });
         }
         products.splice(productIndex, 1);
-        res.json({ message: "Producto eliminado correctamente" });
+        res.json({ message: "Removed product" });
     } catch (error) {
-        res.status(500).json({ message: "Error al eliminar el producto", error: error.message });
+        res.status(500).json({ message: "product not removed", error: error.message });
     }
 });
 
-export default router;
+export default products_router;

@@ -1,9 +1,10 @@
-const express = require ('express');
-const app = express();
-const route_users = express.Router();
+import express from 'express';
 
 //using required router
+const route_users = express.Router();
 
+
+//users default
 let users = [
     {
         id: "2",
@@ -40,10 +41,14 @@ route_users.get('/:id' , (req, res) =>{
 //POST users //VALIDATIONS
 route_users.post('/' , (req, res) =>{
     const {id,name, email , age} = req.body;
+    
     //incomplete JSON
     try{
         if (!id || !name || !email || !age) {
             return res.status(400).json({ error: 'json incomplete' });
+        }
+        if (users.some(p => p.id === id)) {
+            return res.status(400).json({ message: "ID already in use" });
         }
         const new_user = {id, name, email, age};
         users.push(new_user);
@@ -88,6 +93,7 @@ route_users.delete('/:id' , (req, res) =>{
     res.send(users);
     
 })
-module.exports= route_users;
+
+export default route_users;
 
 
