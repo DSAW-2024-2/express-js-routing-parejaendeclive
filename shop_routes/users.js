@@ -16,7 +16,10 @@ route_users.get('/' , (req, res) =>{
 route_users.get('/:id' , (req, res) =>{
     const id=req.params.id;
     const user = users.find(user => user.id === id); 
-    
+    if(!user){
+        
+        return res.status(404).send('User found');
+    }
     res.json(user);
 
 })
