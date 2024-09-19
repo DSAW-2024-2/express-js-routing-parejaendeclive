@@ -40,6 +40,14 @@ route_users.post('/', (req, res) => {
     if (users.some(u => u.id === id)) {
         return res.status(400).json({ message: "ID ya en uso" });
     }
+    if (!/^\d+$/.test(id)) {
+        return res.status(400).json({ message: "ID must be a valid number" });
+    }
+    if (!/^\d+$/.test(age)) {
+        return res.status(400).json({ message: "age must be a valid number" });
+    }
+    
+    
     const new_user = { id, name, email, age };
     users.push(new_user);
     res.send(users);
@@ -55,6 +63,12 @@ route_users.put('/:id', (req, res) => {
     }
     if (!id || !name || !email || !age) {
         return res.status(400).json({ error: 'JSON incompleto' }); 
+    }
+    if (!/^\d+$/.test(id)) {
+        return res.status(400).json({ message: "ID must be a valid number" });
+    }
+    if (!/^\d+$/.test(age)) {
+        return res.status(400).json({ message: "age must be a valid number" });
     }
     const update_user = { id, name, email, age };
     users[index] = update_user;

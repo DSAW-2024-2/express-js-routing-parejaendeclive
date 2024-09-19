@@ -65,6 +65,12 @@ products_router.put('/:id', (req, res) => {
         if (productIndex === -1) {
             return res.status(404).json({ message: "Producto no encontrado" });
         }
+        if (!/^\d+$/.test(id)) {
+            return res.status(400).json({ message: "ID must be a valid number" });
+        }
+        if (!/^\d+$/.test(age)) {
+            return res.status(400).json({ message: "age must be a valid number" });
+        }
         products[productIndex] = { ...products[productIndex], name, price, category };
         res.json({ message: "Producto actualizado" });
     } catch (error) {
