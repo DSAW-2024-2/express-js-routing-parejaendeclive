@@ -1,80 +1,55 @@
 import express from 'express';
-const ordersRouter = express.Router();
+import { users } from './users.js';  // Importa la lista de usuarios
+import { products } from './products.js';  // Importa la lista de productos
 
-// orders default
-let orders = [
-    {
-        id: "1",
-        userId: "5",
-        productId: "7",
-        quantity: 2,
-        status: "pending"
-    }
-];
+const orders_router = express.Router();
 
-// Example users and products for validation
-let users = [
-    { id: "5", name: "John", email: "john@example.com", age: 30 }
-];
+// Lista de pedidos por defecto
+let orders = [];
 
-let products = [
-    { id: "7", name: "Rice", price: 10000, category: "food" }
-];
-
-// GET all orders
-ordersRouter.get('/', (req, res) => {
-    try {
-        res.json(orders);
-    } catch (error) {
-        res.status(500).json({ message: "Error al obtener los pedidos", error: error.message });
-    }
+// GET todos los pedidos
+orders_router.get('/', (req, res) => {
+    res.json(orders);
 });
 
-// POST add order
-ordersRouter.post('/', (req, res) => {
-    try {
-        const { id, userId, productId, quantity, status } = req.body;
+// POST para agregar un nuevo pedido
+orders_router.post('/', (req, res) => {
+    let { id, userId, productId, quantity, status } = req.body;
 
-        // Validating required fields
-        if (!id || !userId || !productId || !quantity || !status) {
-            return res.status(400).json({ message: "Order JSON incomplete" });
-        }
+    // Convertir cantidad a string
+    quantity = String(quantity);
 
-        // Validating if userId and productId exist
-        const userExists = users.some(u => u.id === userId);
-        const productExists = products.some(p => p.id === productId);
-        
-        if (!userExists) {
-            return res.status(400).json({ message: "User ID does not exist" });
-        }
-        if (!productExists) {
-            return res.status(400).json({ message: "Product ID does not exist" });
-        }
-
-        // Checking if the order ID already exists
-        if (orders.some(o => o.id === id)) {
-            return res.status(400).json({ message: "Order ID already in use" });
-        }
-
-        // Adding the new order
-        orders.push({ id, userId, productId, quantity, status });
-        res.status(201).json({ message: "Order added" });
-    } catch (error) {
-        res.status(500).json({ message: "Order not added", error: error.message });
+    // Validación de JSON incompleto
+    if (!id || !userId || !productId || !quantity || !status) {
+        return res.status(400).json({ message: "Orden JSON incompleto" });
     }
+
+    // Verificar si el usuario existe
+    const userExists = users.find(user => user.id === userId);
+    if (!userExists) {
+        return res.status(404).json({ message: "Usuario no encontrado" });
+    }
+
+    // Verificar si el producto existe
+    const productExists = products.find(product => product.id === productId);
+    if (!productExists) {
+        return res.status(404).json({ message: "Producto no encontrado" });
+    }
+
+    // Si las validaciones pasan, agregar la orden
+    const newOrder = { id, userId, productId, quantity, status };
+    orders.push(newOrder);
+    res.status(201).json({ message: "Orden creada exitosamente"});
 });
 
-// GET order by id
-ordersRouter.get('/:id', (req, res) => {
-    try {
-        const order = orders.find(o => o.id === req.params.id);
-        if (!order) {
-            return res.status(404).json({ message: "Order not found" });
-        }
-        res.json(order);
-    } catch (error) {
-        res.status(500).json({ message: "Order not found", error: error.message });
+// GET para obtener un pedido por id
+orders_router.get('/:id', (req, res) => {
+    const order = orders.find(o => o.id === req.params.id);
+    if (!order) {
+        return res.status(404).json({ message: "Pedido no encontrado" });
     }
+    res.json(order);
 });
 
-export default ordersRouter;
+// Exportar el router de órdenes
+export default orders_router;

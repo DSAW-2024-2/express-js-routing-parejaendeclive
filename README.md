@@ -81,7 +81,7 @@ El objeto JSON que debe manejarse en cada uno de los endpoints debe tener la sig
 5. Ejecuta el servidor con el comando `npm start`.
 6. Prueba los endpoints haciendo solicitudes HTTP a `http://localhost:3000/users`, `http://localhost:3000/products`, y `http://localhost:3000/orders`.
 
-### Rúbrica de evaluación
+### Rúbrica de evaluaciónc
 
 | Aspecto                              | Puntuación |
 | ------------------------------------  | ---------- |
