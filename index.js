@@ -23,20 +23,11 @@ app.use('/products', productsRouter);
 app.use('/orders', ordersRouter);
 
 // validation route not found
+// Middleware para manejar rutas no definidas
 app.use((req, res, next) => {
-    try {
-        next();
-    } catch (error) {
-        res.status(404).json({
-            error: "Ruta no encontrada",
-            availableRoutes: {
-                users: "/users",
-                products: "/products",
-                orders: "/orders"
-            }
-        });
-    }
+    res.status(404).json({ error: "Ruta no encontrada" });
 });
+
 
 // listen server
 app.listen(port, () => {
