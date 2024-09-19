@@ -1,7 +1,7 @@
 import express from 'express';
 const route_users = express.Router();
 
-// Lista de usuarios por defecto
+// default users
 export let users = [
     {
         id: "2",
@@ -17,28 +17,28 @@ export let users = [
     }
 ];
 
-// GET todos los usuarios
+// GET all users
 route_users.get('/', (req, res) => {
     res.json(users);
 });
 
-// GET usuario por id
+// GET users by id
 route_users.get('/:id', (req, res) => {
     const user = users.find(user => user.id === req.params.id); 
     if (!user) {
-        return res.status(404).send('Usuario no encontrado');
+        return res.status(404).send('User not founded');
     }
     res.json(user);
 });
 
-// POST agregar usuario
+// POST user
 route_users.post('/', (req, res) => {
     const { id, name, email, age } = req.body;
     if (!id || !name || !email || !age) {
-        return res.status(400).json({ error: 'JSON incompleto' });
+        return res.status(400).json({ error: 'JSON incomplete' });
     }
     if (users.some(u => u.id === id)) {
-        return res.status(400).json({ message: "ID ya en uso" });
+        return res.status(400).json({ message: "ID in use" });
     }
     if (!/^\d+$/.test(id)) {
         return res.status(400).json({ message: "ID must be a valid number" });
@@ -53,16 +53,16 @@ route_users.post('/', (req, res) => {
     res.send(users);
 });
 
-// PUT actualizar usuario
+// PUT update user
 route_users.put('/:id', (req, res) => {
     const { name, email, age } = req.body;
     const id = req.params.id;
     const index = users.findIndex(i => i.id === id);
     if (index < 0) {
-        return res.status(404).send('ID de usuario no existe');
+        return res.status(404).send('ID does not exist');
     }
     if (!id || !name || !email || !age) {
-        return res.status(400).json({ error: 'JSON incompleto' }); 
+        return res.status(400).json({ error: 'JSON incomplete' }); 
     }
     if (!/^\d+$/.test(id)) {
         return res.status(400).json({ message: "ID must be a valid number" });
@@ -75,12 +75,12 @@ route_users.put('/:id', (req, res) => {
     res.send(users);
 });
 
-// DELETE usuario
+// DELETE user
 route_users.delete('/:id', (req, res) => {
     const id = req.params.id;
     const index = users.findIndex(i => i.id === id);
     if (index < 0) {
-        return res.status(404).send('Usuario no encontrado');
+        return res.status(404).send('User not founded');
     }
     users.splice(index, 1);
     res.send(users);

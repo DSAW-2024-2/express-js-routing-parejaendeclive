@@ -1,7 +1,7 @@
 import express from 'express';
 const products_router = express.Router();
 
-// Lista de productos por defecto
+// default products
 export const products = [
     {
         id: "5",
@@ -17,7 +17,7 @@ export const products = [
     }
 ];
 
-//  GET productos
+//  GET products
 products_router.get('/', (req, res) => {
     try {
         res.json(products);
@@ -26,7 +26,7 @@ products_router.get('/', (req, res) => {
     }
 });
 
-// POST agregar producto
+// POST product
 products_router.post('/', (req, res) => {
     try {
         const { id, name, price, category } = req.body;
@@ -49,7 +49,7 @@ products_router.post('/', (req, res) => {
     }
 });
 
-// GET producto por id
+// GET product by id
 products_router.get('/:id', (req, res) => {
     try {
         const product = products.find(p => p.id === req.params.id);
@@ -62,7 +62,7 @@ products_router.get('/:id', (req, res) => {
     }
 });
 
-// PUT actualizar producto
+// PUT update product
 products_router.put('/:id', (req, res) => {
     try {
         const { name, price, category } = req.body;
@@ -90,7 +90,7 @@ products_router.put('/:id', (req, res) => {
     }
 });
 
-// DELETE producto
+// DELETE product
 products_router.delete('/:id', (req, res) => {
     try {
         const productIndex = products.findIndex(p => p.id === req.params.id);
