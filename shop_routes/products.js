@@ -36,6 +36,12 @@ products_router.post('/', (req, res) => {
         if (products.some(p => p.id === id)) {
             return res.status(400).json({ message: "ID ya en uso" });
         }
+        if (!/^\d+$/.test(id)) {
+            return res.status(400).json({ message: "ID must be a valid number" });
+        }
+        if (!/^\d+$/.test(price)) {
+            return res.status(400).json({ message: "price must be a valid number" });
+        }
         products.push({ id, name, price, category });
         res.status(201).json({ message: "Producto agregado" });
     } catch (error) {
@@ -60,18 +66,24 @@ products_router.get('/:id', (req, res) => {
 products_router.put('/:id', (req, res) => {
     try {
         const { name, price, category } = req.body;
-        const productIndex = products.findIndex(p => p.id === req.params.id);
+        
+        const productId = req.params.id;
+        
+        if (!productId||!name || !price || !category) {
+            return res.status(400).json({ message: "JSON de productos incompleto" });
+        }
+        const productIndex = products.findIndex(p => p.id === productId);
         
         if (productIndex === -1) {
             return res.status(404).json({ message: "Producto no encontrado" });
         }
-        if (!/^\d+$/.test(id)) {
+        if (!/^\d+$/.test(productId)) {
             return res.status(400).json({ message: "ID must be a valid number" });
         }
-        if (!/^\d+$/.test(age)) {
-            return res.status(400).json({ message: "age must be a valid number" });
+        if (!/^\d+$/.test(price)) {
+            return res.status(400).json({ message: "price must be a valid number" });
         }
-        products[productIndex] = { ...products[productIndex], name, price, category };
+        products[productIndex] = { ...products[productIndex],productId, name, price, category };
         res.json({ message: "Producto actualizado" });
     } catch (error) {
         res.status(500).json({ message: "Producto no actualizado", error: error.message });

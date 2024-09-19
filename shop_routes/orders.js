@@ -23,6 +23,9 @@ orders_router.post('/', (req, res) => {
     if (!id || !userId || !productId || !quantity || !status) {
         return res.status(400).json({ message: "Orden JSON incompleto" });
     }
+    if (!/^\d+$/.test(quantity)) {
+        return res.status(400).json({ message: "quantity must be a valid number" });
+    }
 
     // Verificar si el usuario existe
     const userExists = users.find(user => user.id === userId);
