@@ -22,7 +22,7 @@ products_router.get('/', (req, res) => {
     try {
         res.json(products);
     } catch (error) {
-        res.status(500).json({ message: "Error al obtener los productos", error: error.message });
+        res.status(500).json({ message: "error getting products", error: error.message });
     }
 });
 
@@ -31,10 +31,10 @@ products_router.post('/', (req, res) => {
     try {
         const { id, name, price, category } = req.body;
         if (!id || !name || !price || !category) {
-            return res.status(400).json({ message: "JSON de productos incompleto" });
+            return res.status(400).json({ message: "JSON incomplete" });
         }
         if (products.some(p => p.id === id)) {
-            return res.status(400).json({ message: "ID ya en uso" });
+            return res.status(400).json({ message: "ID in use" });
         }
         if (!/^\d+$/.test(id)) {
             return res.status(400).json({ message: "ID must be a valid number" });
@@ -43,9 +43,9 @@ products_router.post('/', (req, res) => {
             return res.status(400).json({ message: "price must be a valid number" });
         }
         products.push({ id, name, price, category });
-        res.status(201).json({ message: "Producto agregado" });
+        res.status(201).json({ message: "Product added" });
     } catch (error) {
-        res.status(500).json({ message: "Producto no agregado", error: error.message });
+        res.status(500).json({ message: "Product not added", error: error.message });
     }
 });
 
@@ -54,11 +54,11 @@ products_router.get('/:id', (req, res) => {
     try {
         const product = products.find(p => p.id === req.params.id);
         if (!product) {
-            return res.status(404).json({ message: "ID de producto no existe" });
+            return res.status(404).json({ message: "ID does not exist" });
         }
         res.json(product);
     } catch (error) {
-        res.status(500).json({ message: "Producto no encontrado", error: error.message });
+        res.status(500).json({ message: "Product not founded", error: error.message });
     }
 });
 
@@ -70,12 +70,12 @@ products_router.put('/:id', (req, res) => {
         const productId = req.params.id;
         
         if (!productId||!name || !price || !category) {
-            return res.status(400).json({ message: "JSON de productos incompleto" });
+            return res.status(400).json({ message: "JSON incomplete" });
         }
         const productIndex = products.findIndex(p => p.id === productId);
         
         if (productIndex === -1) {
-            return res.status(404).json({ message: "Producto no encontrado" });
+            return res.status(404).json({ message: "Product not founded" });
         }
         if (!/^\d+$/.test(productId)) {
             return res.status(400).json({ message: "ID must be a valid number" });
@@ -84,9 +84,9 @@ products_router.put('/:id', (req, res) => {
             return res.status(400).json({ message: "price must be a valid number" });
         }
         products[productIndex] = { ...products[productIndex],productId, name, price, category };
-        res.json({ message: "Producto actualizado" });
+        res.json({ message: "Product updated" });
     } catch (error) {
-        res.status(500).json({ message: "Producto no actualizado", error: error.message });
+        res.status(500).json({ message: "Product not updated", error: error.message });
     }
 });
 
@@ -95,12 +95,12 @@ products_router.delete('/:id', (req, res) => {
     try {
         const productIndex = products.findIndex(p => p.id === req.params.id);
         if (productIndex === -1) {
-            return res.status(404).json({ message: "Producto no encontrado" });
+            return res.status(404).json({ message: "Product not founded" });
         }
         products.splice(productIndex, 1);
-        res.json({ message: "Producto eliminado" });
+        res.json({ message: "Product deleted" });
     } catch (error) {
-        res.status(500).json({ message: "Producto no eliminado", error: error.message });
+        res.status(500).json({ message: "Product not deleted", error: error.message });
     }
 });
 
