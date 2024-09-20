@@ -1,5 +1,7 @@
+[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/2snmTAKG)
 # Taller en Parejas: Creación de una API REST con Express.js
-
+## link vercel: https://express-js-routing-parejaendeclive.vercel.app/
+## Andrea Sosa y Samuel Rodriguez
 Este proyecto consiste en un reto de desarrollo backend en el que se debe crear una API REST utilizando el framework Express.js. El objetivo principal es que los estudiantes implementen múltiples rutas utilizando `express.Router()` para organizar su código de manera modular.
 
 ## Contexto
@@ -80,7 +82,7 @@ El objeto JSON que debe manejarse en cada uno de los endpoints debe tener la sig
 5. Ejecuta el servidor con el comando `npm start`.
 6. Prueba los endpoints haciendo solicitudes HTTP a `http://localhost:3000/users`, `http://localhost:3000/products`, y `http://localhost:3000/orders`.
 
-### Rúbrica de evaluación
+### Rúbrica de evaluaciónc
 
 | Aspecto                              | Puntuación |
 | ------------------------------------  | ---------- |

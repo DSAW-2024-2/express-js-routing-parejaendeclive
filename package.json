@@ -1,0 +1,20 @@
+{
+  "name": "express-js-routing-parejaendeclive",
+  "version": "1.0.0",
+  "description": "products",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "author": "Samuel",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.21.0",
+    "vercel": "^37.5.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.5"
+  }
+}
