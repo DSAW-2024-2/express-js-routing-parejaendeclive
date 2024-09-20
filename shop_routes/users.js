@@ -17,6 +17,12 @@ export let users = [
     }
 ];
 
+function string_validation( id,name,email,age){
+    let data =[id,name,email,age]
+    return data.every(item => typeof item === 'string');
+    
+}
+
 // GET all users
 route_users.get('/', (req, res) => {
     res.json(users);
@@ -37,6 +43,14 @@ route_users.post('/', (req, res) => {
     if (!id || !name || !email || !age) {
         return res.status(400).json({ error: 'JSON incomplete' });
     }
+    
+    if(!string_validation(id,name,email,age)){
+        return res.status(400).json({ error: 'type of data invalid' }); 
+
+    }
+   
+
+    if(id ||name ||email||age)
     if (users.some(u => u.id === id)) {
         return res.status(400).json({ message: "ID in use" });
     }
@@ -46,11 +60,11 @@ route_users.post('/', (req, res) => {
     if (!/^\d+$/.test(age)) {
         return res.status(400).json({ message: "age must be a valid number" });
     }
+        const new_user = { id, name, email, age };
+        users.push(new_user);
+        res.send(users);
     
     
-    const new_user = { id, name, email, age };
-    users.push(new_user);
-    res.send(users);
 });
 
 // PUT update user

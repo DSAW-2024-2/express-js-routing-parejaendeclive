@@ -16,6 +16,11 @@ export const products = [
         category: "food"
     }
 ];
+function string_validation( id,name,price, category){
+    let data =[id,name,price,category]
+    return data.every(item => typeof item === 'string');
+    
+}
 
 //  GET products
 products_router.get('/', (req, res) => {
@@ -32,6 +37,10 @@ products_router.post('/', (req, res) => {
         const { id, name, price, category } = req.body;
         if (!id || !name || !price || !category) {
             return res.status(400).json({ message: "JSON incomplete" });
+        }
+        if(!string_validation(id,name,price,category)){
+            return res.status(400).json({ error: 'type of data invalid' }); 
+    
         }
         if (products.some(p => p.id === id)) {
             return res.status(400).json({ message: "ID in use" });

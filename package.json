@@ -11,7 +11,8 @@
   "author": "Samuel",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.21.0"
+    "express": "^4.21.0",
+    "vercel": "^37.5.2"
   },
   "devDependencies": {
     "nodemon": "^3.1.5"

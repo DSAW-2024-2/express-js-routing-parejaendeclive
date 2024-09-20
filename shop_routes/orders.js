@@ -6,6 +6,11 @@ const orders_router = express.Router();
 
 // orders
 let orders = [];
+function string_validation( id,userId,productId, quantity,status){
+    let data =[id,userId,productId,quantity,status]
+    return data.every(item => typeof item === 'string');
+    
+}
 
 // GET orders
 orders_router.get('/', (req, res) => {
@@ -14,6 +19,7 @@ orders_router.get('/', (req, res) => {
 
 // POST new order
 orders_router.post('/', (req, res) => {
+    //destructuring 
     let { id, userId, productId, quantity, status } = req.body;
 
     // quantity string
@@ -23,6 +29,11 @@ orders_router.post('/', (req, res) => {
     if (!id || !userId || !productId || !quantity || !status) {
         return res.status(400).json({ message: "JSON incomplete" });
     }
+
+    if(!string_validation(id,userId,productId,quantity,status)){
+        return res.status(400).json({ error: 'type of data invalid' }); 
+    }
+    
     if (!/^\d+$/.test(quantity)) {
         return res.status(400).json({ message: "quantity must be a valid number" });
     }
